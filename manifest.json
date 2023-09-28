@@ -1,0 +1,34 @@
+{
+    "manifest_version": 3,
+    "version": "1.0.0",
+    "name": "Reviewer Discussion Board",
+    "author": "BonganiBG",
+    "description": "",
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.hyperiondev.cogrammar.com/reviewer/generate_review/*",
+                "https://*.hyperiondev.cogrammar.com/reviewer/generate_dfe_review/*"
+            ],
+            "js": [
+                "src/js/content.js"
+            ],
+            "css": [
+                "src/css/styles.css"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "./popup.html",
+        "default_title": "Reviewer Discussion Board"
+    },
+    "content_security_policy": {
+        "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+    }
+}
