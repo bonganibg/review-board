@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/bonganibg/review-board/issues"
   },
-  "homepage": "https://github.com/bonganibg/review-board#readme"
+  "homepage": "https://github.com/bonganibg/review-board#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
 }

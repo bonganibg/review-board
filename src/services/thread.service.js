@@ -37,11 +37,23 @@ export class ThreadService
      * Get all threads for a student
      * @param {String} studentNumber Student number
      */
-    async get(studentNumber){
-        let path = `${PATH}${studentNumber}/threads`
-        let output = await this.fireabase.get(path);
+    async getAll(studentNumber){
+        let path = `${PATH}${studentNumber}/threads/`
+        let output = await this.fireabase.get(path);            
 
-        console.log(output)
+        if (output == null || output == undefined)
+            return;
+
+        let threads = []
+
+        Object.keys(output).forEach((key) => {
+            let thread = new Thread();
+            thread.create(output[key], key);
+
+            threads.push(thread);
+        });
+
+        return threads;
     }
 
     /**
