@@ -41,4 +41,4 @@ async function loadMessages(){
     threadList.innerHTML = messageItems;
 }
 
-main();
+// main();
