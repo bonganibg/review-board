@@ -1,0 +1,2 @@
+tailwind command
+npx tailwindcss build -i ./src/css/style.css -o ./src/css/output.css --watch

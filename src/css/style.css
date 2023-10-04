@@ -10,3 +10,11 @@
 ::-webkit-scrollbar{
     visibility: hidden;
 }
+
+.inactive-tab{
+    visibility: hidden;
+}
+
+.active-tab{
+    visibility: visible;
+}

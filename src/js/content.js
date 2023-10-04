@@ -11,6 +11,7 @@ const threadService = new ThreadService();
 
 // UI components
 let threadList = document.getElementById("threadBoard");
+let contentScreen = document.getElementById("contentScreen")
 const messageButton = document.getElementById("sendMessage");
 
 // Setup event listeners
@@ -29,7 +30,12 @@ messageButton.addEventListener("click", () => {
 });
 
 async function main(){
-    loadMessages();
+    updateScreenLayout(contentScreen, threadTemplate.mainScreen());        
+    // loadMessages();
+}
+
+function updateScreenLayout(section, template){
+    section.innerHTML = template;
 }
 
 async function loadMessages(){
@@ -41,4 +47,4 @@ async function loadMessages(){
     threadList.innerHTML = messageItems;
 }
 
-// main();
+main();
