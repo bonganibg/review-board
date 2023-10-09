@@ -52,13 +52,16 @@ export class Reply
 
 export class Warning
 {
-    constructor(message){        
+    constructor(message, reviewer){        
         this.strikes = 0;
         this.message = message;
+        this.reviewer = reviewer;
     }
 
-    create(object){        
+    create(object, id){        
         this.strikes = object.strikes;
         this.message = object.message;
+        this.reviewer = object.reviewer;
+        this.id = id;
     }
 }

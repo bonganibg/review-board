@@ -15,9 +15,9 @@ export class WarningService
      * @param {String} criteria Criteria being warned on
      * @param {String} issue Message with the issue being addressed
      */
-    add(studentId, criteria, issue){
+    add(studentId, criteria, issue, reviewer){
         let path = `${PATH}${studentId}/${criteria}`;
-        let warning = new Warning(issue);
+        let warning = new Warning(issue, reviewer);
 
         this.firebase.push(path, warning);
         this.#updateCriteriaWarning(studentId, criteria);
@@ -29,7 +29,7 @@ export class WarningService
      * @param {String} criteria Criteria a student is being warned about
      */
     #updateCriteriaWarning(studentId, criteria){
-        let path = `${PATH}${studentId}/scoring/${criteria}`;
+        let path = `students/${studentId}/scoring/${criteria}`;
         this.firebase.upsert(path, true);
     }
 
@@ -47,13 +47,40 @@ export class WarningService
     }
 
     /**
+     * Get all of the warnings for a certain criteria
+     * @param {String} studentId Student ID
+     * @param {String} criteria Area being warned on
+     * @returns List of past warning messages
+     */
+    async get(studentId, criteria){
+        let path = `${PATH}${studentId}/${criteria}`;
+
+        let output = await this.firebase.get(path);
+
+        if (output == undefined || output == null){
+            return;
+        }
+
+        let warnings = [];
+
+        Object.keys(output).forEach((key) => {
+            let warning = new Warning();
+            warning.create(output[key], key);
+
+            warnings.push(warning);
+        })
+
+        return warnings;
+    }
+
+    /**
      * Increment the number of strikes on a warning
      * @param {String} studentId StudentID
      * @param {String} warningId ID for the warning
      * @param {String} criteria Criteria being updated
      */
     incrementStrikes(studentId, warningId, criteria){
-        let path = `${PATH}${studentId}/${criteria}/${warningId}/strike`;
+        let path = `${PATH}${studentId}/${criteria}/${warningId}/strikes`;
         this.firebase.inc(path);
 
     }
