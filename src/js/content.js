@@ -1,50 +1,15 @@
 import { ThreadTemplates } from "./pageTemplates.js";
 import { ThreadService } from "../services/thread.service.js";
+import { ThreadView } from "../views/thread.view.js";
+import { ThreadController } from "../controllers/thread.controller.js";
 
 // Shared Variables 
 const STUDENT_NUMBER = "STU123456789";
 const REVIEWER_NAME = "Jimmy"
 
-// Services 
-const threadTemplate = new ThreadTemplates();
-const threadService = new ThreadService();
-
 // UI components
-let threadList = document.getElementById("threadBoard");
 let contentScreen = document.getElementById("contentScreen")
-const messageButton = document.getElementById("sendMessage");
 
-// Setup event listeners
-messageButton.addEventListener("click", () => {
-    let message = document.getElementById("message");
-    
-    if (message.value.length < 20 || message.value.length > 3000){
-        return;
-    }
-    
-    threadService.create(STUDENT_NUMBER, REVIEWER_NAME, message.value);
-
-    // Clear output
-    message.value = ""
-    loadMessages();
-});
-
-async function main(){
-    updateScreenLayout(contentScreen, threadTemplate.mainScreen());        
-    // loadMessages();
-}
-
-function updateScreenLayout(section, template){
-    section.innerHTML = template;
-}
-
-async function loadMessages(){
-    let messages = await threadService.getAll(STUDENT_NUMBER);
-
-    let messageItems = messages.map(message => 
-        threadTemplate.message(message.reviewer, message.message, message.id)).join("");
-
-    threadList.innerHTML = messageItems;
-}
-
-main();
+// Services 
+const threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
+threadController.loadPage();
