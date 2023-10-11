@@ -37,6 +37,11 @@ export class WarningView
     }
 
     displayWarnings(warnings){
+        if (warnings == undefined){
+            this.warningBoard.innerHTML = this.#getNoMessageScreen();
+            return;
+        }
+        
         let warningItems = warnings.map(warning => 
             this.#getWarningMessage(warning)).join("");
 
@@ -74,6 +79,16 @@ export class WarningView
                 </div>
 
             </div>
+        `
+    }
+
+    #getNoMessageScreen(){
+        return `
+        <div class="h-full w-full flex flex-col justify-center text-center">
+            <h2>
+                No Content
+            </h2>
+        </div>
         `
     }
 

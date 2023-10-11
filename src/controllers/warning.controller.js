@@ -34,8 +34,8 @@ export class WarningController
 
             this.warningService.add(this.student_number, this.criteria, warning, this.reviewer_name);
 
-            warning.warningMessageInput.value = "";
-            this.warningView.displayWarnings(await this.#getWarnings())   
+            this.warningView.warningMessageInput.value = "";
+            this.warningView.displayWarnings(await this.#getWarnings()); 
         })
     }
 
@@ -48,7 +48,9 @@ export class WarningController
             // Button on click listener
             button.addEventListener('click', async () =>{
                 this.warningService.incrementStrikes(this.student_number, warningId, this.criteria)
-                await this.#setWarningButtonEventListener()
+                
+                // Fix the updates thing
+                this.#setWarningButtonEventListener();
             })
         }
     }

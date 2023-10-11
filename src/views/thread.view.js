@@ -58,9 +58,26 @@ export class ThreadView
     }
 
     displayMessages(messages){
+
+        if (messages == undefined){
+            this.threadList.innerHTML = this.#getNoMessageScreen();
+            return;
+        }
+
+
         let messageItems = messages.map(message => 
             this.#messageTemplate(message.reviewer, message.message, message.id)).join("");
 
         this.threadList.innerHTML = messageItems;
+    }
+
+    #getNoMessageScreen(){
+        return `
+        <div class="h-full w-full flex flex-col justify-center text-center">
+            <h2>
+                No Content
+            </h2>
+        </div>
+        `
     }
 }
