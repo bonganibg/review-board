@@ -1,5 +1,4 @@
 import { Reply } from "../models/models.js";
-import { Firebase } from "../dataAccess/fireabase.js";
 
 const PATH = 'replies/'
 

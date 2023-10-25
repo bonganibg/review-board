@@ -38,3 +38,8 @@
 //     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
 //     warningController.loadPage();
 // });
+
+import { StudentService } from "../services/student.service.js";
+
+let studentService = new StudentService();
+studentService.create("STU987654321", "Testing Jackson")

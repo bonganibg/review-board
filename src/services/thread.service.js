@@ -1,4 +1,3 @@
-import { Firebase } from "../dataAccess/fireabase.js";
 import { Thread } from "../models/models.js";
 
 const PATH = "students/"
