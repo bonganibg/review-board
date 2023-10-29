@@ -15,41 +15,56 @@ export class StudentService
     async create(studentNumber, name){
         let path = API_URL + PATH;
 
+        const studentData = {
+            studentNumber: studentNumber,
+            name: name
+        }
+
         let response = await fetch(path, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
-                studentNumber: studentNumber,
-                name: name
-            }
+            body: JSON.stringify(studentData)
         });
 
         console.log(response);
+        // Return a success message or something
     }
 
-    // /**
-    //  * Get a student object from the database
-    //  * @param {String} studentNumber The student number
-    //  * @returns Student Model
-    //  */
-    // async get(studentNumber){
-    //     let output = await this.firebase.get(PATH + studentNumber);
+    /**
+     * Get a student object from the database
+     * @param {String} studentNumber The student number
+     * @returns Student Model
+     */
+    async get(studentNumber){
+        let response = await fetch(API_URL + PATH + studentNumber, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }            
+        });
+        let output = await response.json();        
 
-    //     if (output == undefined || output === null)
-    //         return;
+        // Conver to student object before returning
+        return output;
+    }
 
-    //     let student = new Student(studentNumber);
-    //     student.create(output);
-    //     return student;
-    // }
+    /**
+     * Update a students details
+     * @param {Student} student student details
+     */
+    async update(student){
 
-    // /**
-    //  * Update a students details
-    //  * @param {Student} student student details
-    //  */
-    // update(student){
-    //     this.firebase.upsert(PATH + student.stdNumber, student);
-    // }
+        let response = await fetch(API_URL + PATH, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(student)
+        });
+        
+        console.log(response);
+        // Return a success message or something
+    }
 }
