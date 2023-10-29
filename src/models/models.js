@@ -20,7 +20,8 @@ export class Student
 
 export class Thread
 {
-    constructor(reviewer, message){
+    constructor(studentNumber, reviewer, message){
+        this.studentNumber = studentNumber;
         this.reviewer = reviewer;
         this.message = message;        
         this.createdAt = Date.now();

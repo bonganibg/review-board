@@ -1,12 +1,11 @@
 import { Thread } from "../models/models.js";
 
-const PATH = "students/"
+const API_URL = "http://localhost:8080/"
+const PATH = "threads/"
 
 export class ThreadService
 {
-    constructor(){
-        this.fireabase = new Firebase();
-    }
+    constructor(){}
 
     /**
      * Create a new message thread for a student
@@ -15,10 +14,18 @@ export class ThreadService
      * @param {String} message The message to be added
      */
     create(studentNumber, reviewer, message){
-        let thread = new Thread(reviewer, message);
-        let path = `${PATH}${studentNumber}/threads/`
+        let thread = new Thread(studentNumber, reviewer, message);
 
-        this.fireabase.push(path, thread);
+        let response = fetch(API_URL + PATH, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(thread)
+        })
+
+        console.log(response);
+        // Return a success or failure message
     }
 
     /**
@@ -28,8 +35,21 @@ export class ThreadService
      * @param {String} message Message being added to the thread
      */
     edit(studentNumber, threadId, message){
-        let path = `${PATH}${studentNumber}/threads/${threadId}/message`;
-        this.fireabase.upsert(path, message);
+        let data = {
+            threadId: threadId,
+            message: message
+        }
+
+        let response = fetch(API_URL + PATH + studentNumber, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        console.log(response);
+        // Return a success or failed message
     }
 
     /**
@@ -37,22 +57,17 @@ export class ThreadService
      * @param {String} studentNumber Student number
      */
     async getAll(studentNumber){
-        let path = `${PATH}${studentNumber}/threads/`
-        let output = await this.fireabase.get(path);            
-
-        if (output == null || output == undefined)
-            return;
-
-        let threads = []
-
-        Object.keys(output).forEach((key) => {
-            let thread = new Thread();
-            thread.create(output[key], key);
-
-            threads.push(thread);
+        let response = fetch(API_URL + PATH + studentNumber, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
-        return threads;
+        console.log(response);
+
+        // Create a list of Thread objects before returning
+        return response;
     }
 
     /**
@@ -62,14 +77,17 @@ export class ThreadService
      * @returns 
      */
     async get(studentNumber, threadId){
-        let path = `${PATH}${studentNumber}/threads/${threadId}`;
-        let output = await this.fireabase.get(path);
+        let response = fetch(API_URL + PATH + studentNumber + "/" + threadId, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-        if (output == undefined || output === null)
-            return;
+        console.log(response);
 
-        let thread = new Thread();
-        thread.create(output);
-        return thread;
+        // Create a Thread objects before returning
+        return response;
+
     }
 }
