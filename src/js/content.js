@@ -18,10 +18,10 @@ const btnDocumentation = document.getElementById("btnDocumentation");
 // const warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
 // warningController.loadPage();
 
-// btnThread.addEventListener('click', () => {    
-//     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-//     threadController.loadPage();
-// });
+btnThread.addEventListener('click', () => {    
+    let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
+    threadController.loadPage();
+});
 
 // btnEfficiency.addEventListener('click', () => {
 //     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);

@@ -13,16 +13,16 @@ export class ThreadService
      * @param {String} reviewer Reviewer creating the thread
      * @param {String} message The message to be added
      */
-    create(studentNumber, reviewer, message){
+    async create(studentNumber, reviewer, message){
         let thread = new Thread(studentNumber, reviewer, message);
 
-        let response = fetch(API_URL + PATH, {
+        let response = await (await fetch(API_URL + PATH, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(thread)
-        })
+        })).json();
 
         console.log(response);
         // Return a success or failure message
@@ -34,19 +34,19 @@ export class ThreadService
      * @param {String} threadId ID for the thread 
      * @param {String} message Message being added to the thread
      */
-    edit(studentNumber, threadId, message){
+    async edit(studentNumber, threadId, message){
         let data = {
             threadId: threadId,
             message: message
         }
 
-        let response = fetch(API_URL + PATH + studentNumber, {
+        let response = await (await fetch(API_URL + PATH + studentNumber, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        })
+        })).json();
 
         console.log(response);
         // Return a success or failed message
@@ -57,17 +57,17 @@ export class ThreadService
      * @param {String} studentNumber Student number
      */
     async getAll(studentNumber){
-        let response = fetch(API_URL + PATH + studentNumber, {
+        let response = await (await fetch(API_URL + PATH + studentNumber, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })).json();
 
         console.log(response);
 
         // Create a list of Thread objects before returning
-        return response;
+        return response.thread;
     }
 
     /**
@@ -77,17 +77,17 @@ export class ThreadService
      * @returns 
      */
     async get(studentNumber, threadId){
-        let response = fetch(API_URL + PATH + studentNumber + "/" + threadId, {
+        let response = await (await fetch(API_URL + PATH + studentNumber + "/" + threadId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })).json();
 
-        console.log(response);
+        console.log(response.status);
 
         // Create a Thread objects before returning
-        return response;
+        return response.thread;
 
     }
 }
