@@ -1,12 +1,11 @@
 import { Warning } from "../models/models.js";
 
-const PATH = 'warnings/'
+const PATH = 'warning/'
+const API_URL = "http://localhost:8080/"
 
 export class WarningService
 {
-    constructor(){
-        this.firebase = new Firebase();
-    }
+    constructor(){}
 
     /**
      * Add a warning on an issue a stuend was warned about
@@ -14,22 +13,18 @@ export class WarningService
      * @param {String} criteria Criteria being warned on
      * @param {String} issue Message with the issue being addressed
      */
-    add(studentId, criteria, issue, reviewer){
-        let path = `${PATH}${studentId}/${criteria}`;
-        let warning = new Warning(issue, reviewer);
+    async add(studentId, criteria, issue, reviewer){
+        let warningData = new Warning(studentId, criteria, issue, reviewer);
 
-        this.firebase.push(path, warning);
-        this.#updateCriteriaWarning(studentId, criteria);
-    }
+        let response = await (await fetch(API_URL + PATH, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(warningData)
+        })).json();
 
-    /**
-     * Update the warning indicator to let reviewer know there are warnings
-     * @param {String} studentId Student number
-     * @param {String} criteria Criteria a student is being warned about
-     */
-    #updateCriteriaWarning(studentId, criteria){
-        let path = `students/${studentId}/scoring/${criteria}`;
-        this.firebase.upsert(path, true);
+        console.log(response);
     }
 
     /**
@@ -39,10 +34,22 @@ export class WarningService
      * @param {String} criteria The issue being warned about
      * @param {String} issue New message
      */
-    edit(studentId, warningId, criteria, issue){
-        let path = `${PATH}${studentId}/${criteria}/${warningId}/issue`;   
+    async edit(studentId, warningId, criteria, issue){
+        let warning = {
+            criteria: criteria,
+            issue: issue,
+            warningId: warningId
+        };
 
-        this.firebase.push(path, issue);
+        let response = await (await fetch(API_URL + PATH + studentId, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(warning)
+        })).json();
+
+        console.log(response);
     }
 
     /**
@@ -52,24 +59,17 @@ export class WarningService
      * @returns List of past warning messages
      */
     async get(studentId, criteria){
-        let path = `${PATH}${studentId}/${criteria}`;
+        let response = await (await fetch(`${API_URL}${PATH}${studentId}?criteria=${criteria}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })).json();
 
-        let output = await this.firebase.get(path);
+        console.log(response)
 
-        if (output == undefined || output == null){
-            return;
-        }
-
-        let warnings = [];
-
-        Object.keys(output).forEach((key) => {
-            let warning = new Warning();
-            warning.create(output[key], key);
-
-            warnings.push(warning);
-        })
-
-        return warnings;
+        // Turn this into an object
+        return response.warnings;
     }
 
     /**
@@ -78,10 +78,15 @@ export class WarningService
      * @param {String} warningId ID for the warning
      * @param {String} criteria Criteria being updated
      */
-    incrementStrikes(studentId, warningId, criteria){
-        let path = `${PATH}${studentId}/${criteria}/${warningId}/strikes`;
-        this.firebase.inc(path);
+    async incrementStrikes(studentId, warningId, criteria){
+        let response = await (await fetch(`${API_URL}${PATH}${studentId}/${warningId}?criteria=${criteria}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })).json();
 
+        console.log(response)
     }
 
 }

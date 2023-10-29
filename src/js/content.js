@@ -23,18 +23,18 @@ btnThread.addEventListener('click', () => {
     threadController.loadPage();
 });
 
-// btnEfficiency.addEventListener('click', () => {
-//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);
-//     warningController.loadPage();
-// });
+btnEfficiency.addEventListener('click', () => {
+    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);
+    warningController.loadPage();
+});
 
-// btnStyle.addEventListener('click', () => {
-//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
-//     warningController.loadPage();
+btnStyle.addEventListener('click', () => {
+    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
+    warningController.loadPage();
 
-// });
+});
 
-// btnDocumentation.addEventListener('click', () => {
-//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
-//     warningController.loadPage();
-// });
+btnDocumentation.addEventListener('click', () => {
+    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
+    warningController.loadPage();
+});
