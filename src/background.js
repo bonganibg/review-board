@@ -1,5 +1,5 @@
-import { WarningController } from "../controllers/warning.controller.js";
-import { ThreadController } from "../controllers/thread.controller.js";
+import { WarningController } from "./controllers/warning.controller.js";
+import { ThreadController } from "./controllers/thread.controller.js";
 
 // Shared Variables 
 const STUDENT_NUMBER = "STU18027103";
@@ -11,12 +11,6 @@ const btnThread = document.getElementById("btnThreads");
 const btnEfficiency = document.getElementById("btnEfficiency");
 const btnStyle = document.getElementById("btnStyle");
 const btnDocumentation = document.getElementById("btnDocumentation");
-
-// Services 
-// const threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-// threadController.loadPage();
-// const warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
-// warningController.loadPage();
 
 btnThread.addEventListener('click', () => {    
     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);

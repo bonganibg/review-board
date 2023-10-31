@@ -35,22 +35,6 @@ export class Thread
     }
 }
 
-export class Reply
-{
-    constructor(reviewer, message){        
-        this.reviewer = reviewer;
-        this.message = message;
-        this.createdAt = Date.now();
-    }
-
-    create(object, id){ 
-        this.id = id
-        this.reviewer = object.reviewer;
-        this.message = object.message;
-        this.createdAt = object.createdAt;
-    }
-}
-
 export class Warning
 {
     constructor(studentId, criteria, issue, reviewer){

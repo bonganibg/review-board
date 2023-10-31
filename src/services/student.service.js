@@ -31,40 +31,4 @@ export class StudentService
         console.log(response);
         // Return a success message or something
     }
-
-    /**
-     * Get a student object from the database
-     * @param {String} studentNumber The student number
-     * @returns Student Model
-     */
-    async get(studentNumber){
-        let response = await fetch(API_URL + PATH + studentNumber, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }            
-        });
-        let output = await response.json();        
-
-        // Conver to student object before returning
-        return output;
-    }
-
-    /**
-     * Update a students details
-     * @param {Student} student student details
-     */
-    async update(student){
-
-        let response = await fetch(API_URL + PATH, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(student)
-        });
-        
-        console.log(response);
-        // Return a success message or something
-    }
 }
