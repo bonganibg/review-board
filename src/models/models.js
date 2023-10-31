@@ -44,13 +44,23 @@ export class Warning
         this.reviewer = reviewer;
     }
 
-    create(object, id){        
-        this.studentId = object.studentId;
-        this.criteria = object.criteria;
-        this.issue = object.issue;
+    create(object){                        
+        this.message = object.message;
         this.reviewer = object.reviewer;
-        this.id = id;
+        this.strikes = object.strikes;
+        this.id = object.id;
     }
+
+    /*
+        {
+            studentId,
+            criteria,
+            issue/message,
+            reviewer,
+            id,
+            strikes
+        }
+     */
 }
 
 export class Response

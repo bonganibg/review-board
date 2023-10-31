@@ -32,10 +32,14 @@ export class WarningController
                 return;
             }
 
-            this.warningService.add(this.student_number, this.criteria, warning, this.reviewer_name);
+            let result = await this.warningService.add(this.student_number, this.criteria, warning, this.reviewer_name);
 
-            this.warningView.warningMessageInput.value = "";
-            this.warningView.displayWarnings(await this.#getWarnings()); 
+            if (result.isSuccess){
+                this.warningView.warningMessageInput.value = "";
+                this.warningView.displayWarnings(await this.#getWarnings()); 
+            } else {
+                alert(`${result.message} while trying to create warning`);
+            }         
         })
     }
 

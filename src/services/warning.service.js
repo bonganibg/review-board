@@ -1,4 +1,4 @@
-import { Warning } from "../models/models.js";
+import { Warning, Response } from "../models/models.js";
 
 const PATH = 'warning/'
 const API_URL = "http://localhost:8080/"
@@ -14,17 +14,28 @@ export class WarningService
      * @param {String} issue Message with the issue being addressed
      */
     async add(studentId, criteria, issue, reviewer){
+        // Create request body
         let warningData = new Warning(studentId, criteria, issue, reviewer);
 
-        let response = await (await fetch(API_URL + PATH, {
+        // Perform Request
+        let response = await fetch(API_URL + PATH, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(warningData)
-        })).json();
+        })
 
-        console.log(response);
+        // Check if request was successfull
+        if (response.status < 300)
+            return new Response("Successfully Created", true);
+
+        // Check application sent bad data
+        if (response.status < 500)
+            return new Response("Application Error", false);
+
+        // Check if server had an error
+        return new Response("Server Error", false);
     }
 
     /**
@@ -35,21 +46,31 @@ export class WarningService
      * @param {String} issue New message
      */
     async edit(studentId, warningId, criteria, issue){
+        // Create request body
         let warning = {
             criteria: criteria,
             issue: issue,
             warningId: warningId
         };
 
-        let response = await (await fetch(API_URL + PATH + studentId, {
+        // Perform request
+        let response = await fetch(API_URL + PATH + studentId, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(warning)
-        })).json();
+        })
 
-        console.log(response);
+        if (response.status < 300)
+            return new Response("Success", true);
+
+        // Check application sent bad data
+        if (response.status < 500)
+            return new Response("Application Error", false);
+
+        // Check if server had an error
+        return new Response("Server Error", false);
     }
 
     /**
@@ -59,17 +80,31 @@ export class WarningService
      * @returns List of past warning messages
      */
     async get(studentId, criteria){
-        let response = await (await fetch(`${API_URL}${PATH}${studentId}?criteria=${criteria}`, {
+        // Request
+        let response = await fetch(`${API_URL}${PATH}${studentId}?criteria=${criteria}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })).json();
+        })
 
-        console.log(response)
+        // Check successful and create list of Warnings
+        if (response.status < 300){
+            repsonse = await response.json();
+            let warnings = []
 
-        // Turn this into an object
-        return response.warnings;
+            response.warnings.forEach(warningItem => {
+                let warning = new Warning(studentId, criteria, _, _);
+                warning.create(warningItem);
+
+                warnings.push(warning);               
+            });
+
+            return warnings;
+        }
+
+        // It failed
+        return undefined;
     }
 
     /**
