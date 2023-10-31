@@ -4,16 +4,17 @@
   "name": "Reviewer Discussion Board",
   "author": "BonganiBG",
   "description": "",
-  "permissions": ["tabs", "storage", "activeTab", "scripting"],
+  "permissions": ["tabs", "storage", "activeTab", "scripting"],  
   "content_scripts": [
     {
       "world": "MAIN",
       "all_frames": true,
       "matches": [
         "https://*.hyperiondev.cogrammar.com/reviewer/generate_review/*",
-        "https://*.hyperiondev.cogrammar.com/reviewer/generate_dfe_review/*"
+        "https://*.hyperiondev.cogrammar.com/reviewer/generate_dfe_review/*",
+        "https://*.hyperiondev.cogrammar.com/reviewer/dashboard/"
       ],
-      "js": ["src/js/content.js"]
+      "js": ["./src/js/contents.js"]
     }
   ],
   "host_permissions": [
