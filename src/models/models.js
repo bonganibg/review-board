@@ -27,8 +27,8 @@ export class Thread
         this.createdAt = Date.now();
     }    
 
-    create(object, id){
-        this.id = id;
+    create(object){
+        this.id = object.id;
         this.reviewer = object.reviewer;
         this.message = object.message;
         this.createdAt = object.createdAt;
@@ -50,5 +50,14 @@ export class Warning
         this.issue = object.issue;
         this.reviewer = object.reviewer;
         this.id = id;
+    }
+}
+
+export class Response
+{
+    constructor(message, isSuccess)
+    {
+        this.message = message;
+        this.isSuccess = isSuccess
     }
 }

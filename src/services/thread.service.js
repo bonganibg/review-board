@@ -1,4 +1,4 @@
-import { Thread } from "../models/models.js";
+import { Thread, Response } from "../models/models.js";
 
 const API_URL = "http://localhost:8080/"
 const PATH = "threads/"
@@ -14,18 +14,29 @@ export class ThreadService
      * @param {String} message The message to be added
      */
     async create(studentNumber, reviewer, message){
+        // Create the API object
         let thread = new Thread(studentNumber, reviewer, message);
 
-        let response = await (await fetch(API_URL + PATH, {
+        // Run the API query
+        let response = await fetch(API_URL + PATH, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(thread)
-        })).json();
+        })
 
-        console.log(response);
-        // Return a success or failure message
+        // Check for successful operation
+        if (response.status === 201)
+            return new Response("Created", true)                
+         
+
+        // Check for client side error
+        if (400 > response.status < 500)
+            return new Response("Application Error", false)        
+
+        // Check for server side error
+        return new Response("Server Error", false)
     }
 
     /**
@@ -35,21 +46,29 @@ export class ThreadService
      * @param {String} message Message being added to the thread
      */
     async edit(studentNumber, threadId, message){
+        // Create query object
         let data = {
             threadId: threadId,
             message: message
         }
 
-        let response = await (await fetch(API_URL + PATH + studentNumber, {
+        // Perform API request
+        let response = await fetch(API_URL + PATH + studentNumber, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        })).json();
+        })
+        
+        if (response.status === 200)
+            return new Response("Successfully Uploaded", true);
 
-        console.log(response);
-        // Return a success or failed message
+        if (400 >= response.status < 500)
+            return new Response("Application Error", false);
+
+        return new Response("Server Error", false);
+
     }
 
     /**
@@ -57,17 +76,30 @@ export class ThreadService
      * @param {String} studentNumber Student number
      */
     async getAll(studentNumber){
-        let response = await (await fetch(API_URL + PATH + studentNumber, {
+        // Run Request
+        let response = await fetch(API_URL + PATH + studentNumber, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })).json();
+        })
 
-        console.log(response);
+        // Return a list of the Thread obj if request was successful
+        if (response.status === 200){
+            response = await response.json();
+            let threads = [];
 
-        // Create a list of Thread objects before returning
-        return response.thread;
+            response.thread.forEach(thread => {
+                let threadObj = new Thread(studentNumber, _, _);
+                threadObj.create(thread);
+
+                threads.push(threadObj);                            
+            });
+
+            return threads;
+        }
+        
+        return undefined;
     }
 
     /**
@@ -77,17 +109,25 @@ export class ThreadService
      * @returns 
      */
     async get(studentNumber, threadId){
-        let response = await (await fetch(API_URL + PATH + studentNumber + "/" + threadId, {
+        // Perform the request
+        let response = await fetch(API_URL + PATH + studentNumber + "/" + threadId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })).json();
+        })
 
-        console.log(response.status);
+        // If the item was found
+        if (response.status === 200)
+        {
+            response = await response.json();
+            
+            let thread = new Thread(studentNumber, _, _);
+            thread.create(response.thread);
 
-        // Create a Thread objects before returning
-        return response.thread;
+            return thread;
+        }
 
+        return undefined;
     }
 }

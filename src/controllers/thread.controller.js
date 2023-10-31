@@ -16,6 +16,11 @@ export class ThreadController
         this.setEventListeners();
     }
 
+    async #getMessages(){
+        let messages = await this.threadService.getAll(this.student_number);
+        return messages;
+    }
+
     async setEventListeners(){
         await this.#setMessageButtonEventListener();
     }
@@ -29,15 +34,15 @@ export class ThreadController
                 return;
             }            
             
-            this.threadService.create(this.student_number, this.reviewer_name, message.value);
-
-            message.value = "";
-            this.threadView.displayMessages(await this.#getMessages());
+            let result = await this.threadService.create(this.student_number, 
+                                    this.reviewer_name, message.value);
+            
+            if (result.isSuccess){
+                message.value = "";
+                this.threadView.displayMessages(await this.#getMessages());
+            } else {
+                alert(`${result.message} creating the thread`)
+            }
         })
-    }
-
-    async #getMessages(){
-        let messages = await this.threadService.getAll(this.student_number);
-        return messages;
-    }
+    }    
 }
