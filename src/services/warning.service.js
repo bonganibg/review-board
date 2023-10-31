@@ -79,14 +79,18 @@ export class WarningService
      * @param {String} criteria Criteria being updated
      */
     async incrementStrikes(studentId, warningId, criteria){
-        let response = await (await fetch(`${API_URL}${PATH}${studentId}/${warningId}?criteria=${criteria}`, {
+        let response = await fetch(`${API_URL}${PATH}strike/${studentId}/${warningId}?criteria=${criteria}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             }
-        })).json();
+        });
 
-        console.log(response)
+        if (response.status === 200){
+            return true;
+        }        
+
+        return false;
     }
 
 }

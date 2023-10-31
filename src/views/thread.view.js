@@ -17,7 +17,7 @@ export class ThreadView
             </div>
 
             <div class="w-full h-[10vh] flex justify-center">
-                <textarea name="" id="txtThreadMessage" class="w-full h-full p-2 text-sm "></textarea>
+                <textarea name="" minlength="20" maxlength="250" id="txtThreadMessage" class="w-full h-full p-2 text-sm "></textarea>
 
                 <button id="btnThreadMessage" class="bg-gray-500 p-5">
                     <svg xmlns="http://www.w3.org/2000/svg" class="text-white" width="16" height="16"

@@ -27,8 +27,8 @@ export class WarningController
         this.warningView.addWarningButton.addEventListener('click', async () => {
             let warning = this.warningView.warningMessageInput.value
 
-            if (warning.length < 20 || warning.length > 350){
-                alert("Too long");
+            if (warning.length < 20 || warning.length > 250){
+                alert("The input should be between 20 - 250 characters")
                 return;
             }
 
@@ -44,13 +44,15 @@ export class WarningController
             let container = this.warningView.strikeContainers[index];
             let warningId = container.getAttribute('data-warningId');
             let button = container.getElementsByTagName("button")[0];            
+            let strikes = container.getElementsByTagName("p")[0];
 
             // Button on click listener
             button.addEventListener('click', async () =>{
-                this.warningService.incrementStrikes(this.student_number, warningId, this.criteria)
+                let isUpdated = await this.warningService.incrementStrikes(this.student_number, warningId, this.criteria)
                 
-                // Fix the updates thing
-                this.#setWarningButtonEventListener();
+                if (isUpdated){
+                    strikes.innerText = parseInt(strikes.innerText) + 1;
+                }
             })
         }
     }

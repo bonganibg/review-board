@@ -24,8 +24,8 @@ export class ThreadController
         this.threadView.messageButton.addEventListener('click', async () => {
             let message = document.getElementById("txtThreadMessage");
 
-            if (message.value.length < 20 || message.value.length > 350){
-                alert("Too long")
+            if (message.value.length < 20 || message.value.length > 250){
+                alert("The input should be between 20 - 250 characters")
                 return;
             }            
             
