@@ -24,6 +24,7 @@ export class ThreadController
     async setEventListeners(){
         await this.#setMessageButtonEventListener();
     }
+    
 
     async #setMessageButtonEventListener(){
         this.threadView.messageButton.addEventListener('click', async () => {
@@ -44,5 +45,6 @@ export class ThreadController
                 alert(`${result.message} creating the thread`)
             }
         })
-    }    
+    }
+
 }

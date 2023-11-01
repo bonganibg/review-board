@@ -5,9 +5,6 @@
   "author": "BonganiBG",
   "description": "",
   "permissions": ["tabs", "storage", "activeTab", "scripting"],
-  "background": {
-    "service_worker": "./src/test.js"
-},
   "content_scripts": [
     {      
       "all_frames": true,

@@ -31,4 +31,17 @@ export class StudentService
         console.log(response);
         // Return a success message or something
     }
+
+    async studentExists(studentNumber){
+        let path = API_URL + PATH + studentNumber;
+        let response = await fetch(path, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+
+        return response.status == 200;            
+    }
 }
