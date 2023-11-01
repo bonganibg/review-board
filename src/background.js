@@ -14,15 +14,18 @@ const btnDocumentation = document.getElementById("btnDocumentation");
 
 const testing = document.getElementById("testing")
 
-console.log("Hello World");
 
-// popup.js
+
+
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
-    // Validate the message's structure.
-    if ((msg.from === 'content')) {
-      testing.innerText = msg.subject;
-    }
-  });
+  console.log('We in here')
+  // Validate the message's structure.
+  if ((msg.from === 'content')) {
+    testing.innerText = msg.subject;
+  }
+});
+
+
 
 // btnThread.addEventListener('click', () => {    
 //     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
