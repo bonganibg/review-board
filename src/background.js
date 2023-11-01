@@ -12,23 +12,35 @@ const btnEfficiency = document.getElementById("btnEfficiency");
 const btnStyle = document.getElementById("btnStyle");
 const btnDocumentation = document.getElementById("btnDocumentation");
 
-btnThread.addEventListener('click', () => {    
-    let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-    threadController.loadPage();
-});
+const testing = document.getElementById("testing")
 
-btnEfficiency.addEventListener('click', () => {
-    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);
-    warningController.loadPage();
-});
+console.log("Hello World");
 
-btnStyle.addEventListener('click', () => {
-    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
-    warningController.loadPage();
+// popup.js
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+    // Validate the message's structure.
+    if ((msg.from === 'content')) {
+      testing.innerText = msg.subject;
+    }
+  });
 
-});
+// btnThread.addEventListener('click', () => {    
+//     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
+//     threadController.loadPage();
+// });
 
-btnDocumentation.addEventListener('click', () => {
-    let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
-    warningController.loadPage();
-});
+// btnEfficiency.addEventListener('click', () => {
+//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);
+//     warningController.loadPage();
+// });
+
+// btnStyle.addEventListener('click', () => {
+//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
+//     warningController.loadPage();
+
+// });
+
+// btnDocumentation.addEventListener('click', () => {
+//     let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
+//     warningController.loadPage();
+// });
