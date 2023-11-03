@@ -90,11 +90,11 @@ export class WarningService
 
         // Check successful and create list of Warnings
         if (response.status < 300){
-            repsonse = await response.json();
+            let data = await response.json();   
             let warnings = []
 
-            response.warnings.forEach(warningItem => {
-                let warning = new Warning(studentId, criteria, _, _);
+            data.warnings.forEach(warningItem => {
+                let warning = new Warning(studentId, criteria, "", "");
                 warning.create(warningItem);
 
                 warnings.push(warning);               

@@ -4,7 +4,7 @@ import { ThreadController } from "./controllers/thread.controller.js";
 // Shared Variables 
 var STUDENT_NUMBER = undefined;
 var REVIEWER_NAME = undefined;
-var STUDENT_NAME = undefined
+var STUDENT_NAME = undefined;
 
 // UI components
 const contentScreen = document.getElementById("contentScreen");
@@ -28,11 +28,13 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
   }
 });
 
+// SetupEventLisetners();
+
 function SetupEventLisetners()
 {
   btnThread.addEventListener('click', () => {    
     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-    threadController.loadPage();
+    threadController.loadPage(STUDENT_NUMBER, STUDENT_NAME);
   });
   
   btnEfficiency.addEventListener('click', () => {

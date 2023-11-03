@@ -1,5 +1,6 @@
 import { ThreadService } from "../services/thread.service.js";
 import { ThreadView } from "../views/thread.view.js";
+import { StudentService } from "../services/student.service.js";
 
 export class ThreadController
 {
@@ -7,13 +8,15 @@ export class ThreadController
         this.student_number = student_number;
         this.reviewer_name = reviewer_name;
         this.threadService = new ThreadService();
+        this.studentService = new StudentService();
         this.threadView = new ThreadView(contentElement);        
     }    
 
-    async loadPage(){
+    async loadPage(stdNumber, stdName){
         this.threadView.loadPage();
+        await this.registerStudent(stdNumber, stdName);
         this.threadView.displayMessages(await this.#getMessages());
-        this.setEventListeners();
+        this.setEventListeners();        
     }
 
     async #getMessages(){
@@ -23,6 +26,14 @@ export class ThreadController
 
     async setEventListeners(){
         await this.#setMessageButtonEventListener();
+    }
+
+    async registerStudent(studentNumber, studentName)
+    {
+        const studentExists = await this.studentService.studentExists(studentNumber);
+        if (!studentExists){
+            await this.studentService.create(studentNumber, studentName)
+        }
     }
     
 

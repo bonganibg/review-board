@@ -86,11 +86,11 @@ export class ThreadService
 
         // Return a list of the Thread obj if request was successful
         if (response.status === 200){
-            response = await response.json();
+            let data = await response.json();
             let threads = [];
 
-            response.thread.forEach(thread => {
-                let threadObj = new Thread(studentNumber, _, _);
+            data.thread.forEach(thread => {
+                let threadObj = new Thread(studentNumber, "", "");
                 threadObj.create(thread);
 
                 threads.push(threadObj);                            
@@ -120,10 +120,10 @@ export class ThreadService
         // If the item was found
         if (response.status === 200)
         {
-            response = await response.json();
+            let data = await response.json();
             
-            let thread = new Thread(studentNumber, _, _);
-            thread.create(response.thread);
+            let thread = new Thread(studentNumber, "", "");
+            thread.create(data.thread);
 
             return thread;
         }
