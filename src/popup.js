@@ -13,22 +13,22 @@ const btnEfficiency = document.getElementById("btnEfficiency");
 const btnStyle = document.getElementById("btnStyle");
 const btnDocumentation = document.getElementById("btnDocumentation");
 
-var setup = false;
+chrome.storage.local.get('student', (result) => {
+  let details = JSON.parse(result.student);
 
-chrome.runtime.onMessage.addListener((msg, sender, response) => {
-  console.log(setup)
-  if ((msg.source === 'content' && setup === false)) {
-    setup = true;   
-    STUDENT_NUMBER = msg.studentNumber;
-    REVIEWER_NAME = msg.reviewer;
-    STUDENT_NAME = msg.studentName;
-    btnThread.innerText = `${STUDENT_NAME} Dashboard`
+  if (details.source == 'content')
+  {
+    STUDENT_NUMBER = details.studentNumber;
+    REVIEWER_NAME = details.reviewer;
+    STUDENT_NAME = details.studentName
 
+    btnThread.innerText = `${STUDENT_NAME}`
     SetupEventLisetners();
   }
-});
-
-// SetupEventLisetners();
+  else{
+    alert("Failed to load student details")
+  }  
+})
 
 function SetupEventLisetners()
 {
