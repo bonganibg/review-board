@@ -130,4 +130,25 @@ export class ThreadService
 
         return undefined;
     }
+
+    /**
+     * Delete a message from the thread
+     * @param {string} studentId Student number
+     * @param {string} threadId Id for the thread
+     * @returns true if the operation was successful
+     */
+    async delete(studentId, threadId    ){
+        let response = await fetch(`${API_URL}${PATH}/${studentId}?threadId=${threadId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200){
+            return true
+        }
+
+        return false;
+    }
 }
