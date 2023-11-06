@@ -13,22 +13,24 @@ const btnEfficiency = document.getElementById("btnEfficiency");
 const btnStyle = document.getElementById("btnStyle");
 const btnDocumentation = document.getElementById("btnDocumentation");
 
-chrome.storage.local.get('student', (result) => {
-  let details = JSON.parse(result.student);
+// chrome.storage.local.get('student', (result) => {
+//   let details = JSON.parse(result.student);
 
-  if (details.source == 'content')
-  {
-    STUDENT_NUMBER = details.studentNumber;
-    REVIEWER_NAME = details.reviewer;
-    STUDENT_NAME = details.studentName
+//   if (details.source == 'content')
+//   {
+//     STUDENT_NUMBER = details.studentNumber;
+//     REVIEWER_NAME = details.reviewer;
+//     STUDENT_NAME = details.studentName
 
-    btnThread.innerText = `${STUDENT_NAME}`
-    SetupEventLisetners();
-  }
-  else{
-    alert("Failed to load student details")
-  }  
-})
+//     btnThread.innerText = `${STUDENT_NAME}`
+//     SetupEventLisetners();
+//   }
+//   else{
+//     alert("Failed to load student details")
+//   }  
+// })
+
+SetupEventLisetners()
 
 function SetupEventLisetners()
 {

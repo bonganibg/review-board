@@ -18,3 +18,7 @@
 .active-tab{
     visibility: visible;
 }
+
+textarea,input:focus{
+    outline: none;
+}

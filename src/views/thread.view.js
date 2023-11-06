@@ -3,7 +3,19 @@ import { ThreadController } from "../controllers/thread.controller.js";
 export class ThreadView
 {
     constructor(content_screen){
-        this.contentElement = content_screen;        
+        this.contentElement = content_screen;
+        this.getTemplate("./templates/message.template.html")  
+    }
+
+    getTemplate(template){        
+        const xhr = new XMLHttpRequest();        
+        xhr.open('GET', template);    
+        console.log(xhr)            
+        xhr.onload = () => {                        
+            if (xhr.status === 200) {
+                this.contentElement.innerHTML  = xhr.responseText;
+            }        
+        }
     }
 
     loadPage(){
