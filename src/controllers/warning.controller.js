@@ -43,8 +43,8 @@ export class WarningController {
     }
 
     async #setIncreaseStrikeListerner() {        
-        for (let index = 0; index < this.warningView.strikeContainers.length; index++) {
-            let container = this.warningView.strikeContainers[index];
+        for (let index = 0; index < this.warningView.warningMessagesContainer.length; index++) {
+            let container = this.warningView.warningMessagesContainer[index];
             let warningId = container.getAttribute('data-warningId');           
             let button = container.getElementsByTagName("a")[0];
             let strikes = container.getElementsByTagName("p")[1];      

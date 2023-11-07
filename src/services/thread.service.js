@@ -138,7 +138,7 @@ export class ThreadService
      * @returns true if the operation was successful
      */
     async delete(studentId, threadId    ){
-        let response = await fetch(`${API_URL}${PATH}/${studentId}?threadId=${threadId}`, {
+        let response = await fetch(`${API_URL}${PATH}${studentId}?threadId=${threadId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

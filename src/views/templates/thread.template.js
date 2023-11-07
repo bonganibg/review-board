@@ -8,7 +8,7 @@ export class ThreadTemplate
         <div class="flex flex-col gap-2 h-full overflow-x-scroll" id="threadBoard">
         </div>
         
-        <div class="w-full flex justify-center bg-[#212529]">
+        <div class="w-full flex justify-center bg-[#212529]"> 
             <textarea name="" minlength="20" maxlength="250" id="txtThreadMessage"
                 class="w-full p-2 text-sm min-h-[40px] bg-[#212529] text-[#FFFFFF] max-h-[150px]"></textarea>
         
@@ -25,13 +25,32 @@ export class ThreadTemplate
 
     messageTemplate(reviewer, message, threadId){
         return`
-            <div class="p-4 flex flex-col justify-between gap-4 bg-white border-b-[1px] border-[#9ea7af]" id="${threadId}">
+            <div class="p-4 flex flex-col justify-between gap-4 bg-white border-b-[1px] border-[#9ea7af] threadContainer" data-threadId=${threadId}  id="${threadId}">
                 <h2 class="text-md font-semibold" id="reviewerName">
                     ${reviewer}
                 </h2>
-                <p class="text-sm text-[#6C757D]" id="message">
-                    ${message}
-                </p>
+                <div class="flex justify-between">
+                    <p class="text-sm text-[#6C757D]" id="message">
+                        ${message}
+                    </p>
+                    <button id="btnDelete">
+                        <svg width="18" height="18" viewBox="0 0 84 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="57" height="4" fill="#AE5858"/>
+                            <rect x="27" y="82" width="57" height="4" fill="#AE5858"/>
+                            <rect x="84" y="15" width="67" height="4" transform="rotate(90 84 15)" fill="#AE5858"/>
+                            <rect x="4" y="4" width="67" height="4" transform="rotate(90 4 4)" fill="#AE5858"/>
+                            <rect x="34" y="20" width="15" height="3" fill="#AE5858"/>
+                            <rect x="28" y="63" width="28" height="3" fill="#AE5858"/>
+                            <rect x="28" y="31" width="28" height="3" fill="#AE5858"/>
+                            <rect x="20" y="25" width="43" height="3" fill="#AE5858"/>
+                            <rect x="28" y="31" width="35" height="3" transform="rotate(90 28 31)" fill="#AE5858"/>
+                            <rect x="59" y="31" width="35" height="3" transform="rotate(90 59 31)" fill="#AE5858"/>
+                            <rect x="36" y="38" width="21" height="2" transform="rotate(90 36 38)" fill="#AE5858"/>
+                            <rect x="43" y="38" width="21" height="2" transform="rotate(90 43 38)" fill="#AE5858"/>
+                            <rect x="50" y="38" width="21" height="2" transform="rotate(90 50 38)" fill="#AE5858"/>
+                        </svg>
+                    </button>
+                </div>  
                 <div class="flex flex-row gap-2 h-[25px] justify-start">
                     <p class="font-semibold text-[#6C757D]" id="strikeCounter">
                         

@@ -142,7 +142,7 @@ export class WarningService
             warningId: warningId
         }
 
-        let response = await fetch(`${API_URL}${PATH}/${studentId}`, {
+        let response = await fetch(`${API_URL}${PATH}${studentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

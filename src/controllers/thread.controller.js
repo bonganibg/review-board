@@ -25,7 +25,8 @@ export class ThreadController
     }
 
     async setEventListeners(){
-        await this.#setMessageButtonEventListener();
+        await this.#setSendMessageEventListener();
+        await this.#setDeleteMessageEventListener();
     }
 
     async registerStudent(studentNumber, studentName)
@@ -37,7 +38,7 @@ export class ThreadController
     }
     
 
-    async #setMessageButtonEventListener(){
+    async #setSendMessageEventListener(){
         this.threadView.messageButton.addEventListener('click', async () => {
             let message = document.getElementById("txtThreadMessage");
 
@@ -56,6 +57,26 @@ export class ThreadController
                 alert(`${result.message} creating the thread`)
             }
         })
+    }
+
+    async #setDeleteMessageEventListener(){
+        for (let index = 0; index < this.threadView.threadMessagesContainer.length; index++){
+            let container = this.threadView.threadMessagesContainer[index];
+            let threadId = container.getAttribute('data-threadId');
+            let deleteButton = container.getElementsByTagName('button')[0]
+
+            deleteButton.addEventListener('click', async () => {
+                let result = await this.threadService.delete(this.student_number, threadId);
+
+                if (result){
+                    this.threadView.displayMessages(await this.#getMessages());
+                    this.#setDeleteMessageEventListener();
+                }
+                else{
+                    alert('Error trying to delete message')
+                }
+            })
+        }
     }
 
 }

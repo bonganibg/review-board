@@ -1,5 +1,5 @@
 import { Warning } from "../models/models.js"
-import { WarningTemplate } from "./templates/warning,template.js";
+import { WarningTemplate } from "./templates/warning.template.js";
 import { SharedTemplate } from './templates/shared.template.js'
 
 export class WarningView
@@ -35,6 +35,6 @@ export class WarningView
         this.warningBoard.innerHTML = warningItems;
 
         // Store references to each button
-        this.strikeContainers = document.getElementsByClassName("warningContainer");
+        this.warningMessagesContainer = document.getElementsByClassName("warningContainer");
     }    
 }

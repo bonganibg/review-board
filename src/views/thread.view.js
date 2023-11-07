@@ -31,5 +31,7 @@ export class ThreadView
             this.threadTemplate.messageTemplate(message.reviewer, message.message, message.id)).join("");
 
         this.threadList.innerHTML = messageItems;
+
+        this.threadMessagesContainer = document.getElementsByClassName('threadContainer');
     }
 }
