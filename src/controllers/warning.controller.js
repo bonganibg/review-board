@@ -46,19 +46,31 @@ export class WarningController {
         for (let index = 0; index < this.warningView.warningMessagesContainer.length; index++) {
             let container = this.warningView.warningMessagesContainer[index];
             let warningId = container.getAttribute('data-warningId');           
-            let button = container.getElementsByTagName("a")[0];
-            let strikes = container.getElementsByTagName("p")[1];      
+            let strikeButton = container.getElementsByTagName("a")[0];
+            let strikes = container.getElementsByTagName("p")[1];     
+            let deleteButton = container.getElementsByTagName('button')[0]; 
             
-            console.log(container)
-
             // Button on click listener
-            button.addEventListener('click', async () => {
+            strikeButton.addEventListener('click', async () => {
                 let isUpdated = await this.warningService.incrementStrikes(this.student_number, warningId, this.criteria)
 
                 if (isUpdated) {
                     strikes.innerText = parseInt(strikes.innerText) + 1;
                 }
-            })
+            });
+
+            // Delete button 
+            deleteButton.addEventListener('click', async () => {
+                let wasDeleted = await this.warningService.delete(this.student_number, warningId, this.criteria);
+
+                if (wasDeleted){
+                    this.warningView.displayWarnings(await this.#getWarnings());
+                    this.#setIncreaseStrikeListerner();
+                }
+                else{
+                    alert('Error trying to delete message')
+                }
+            });
         }
     }
 
