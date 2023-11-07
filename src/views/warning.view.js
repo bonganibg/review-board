@@ -25,7 +25,7 @@ export class WarningView
 
     displayWarnings(warnings){
         if (warnings == undefined){
-            this.warningBoard.innerHTML = this.warningTemplate.getNoMessageScreen();
+            this.warningBoard.innerHTML = this.sharedTemplate.getNoContentScreen();
             return;
         }
         

@@ -54,17 +54,5 @@ export class ThreadTemplate
                 </div>
             </div>
         `
-    }
-
-    getNoContentScreen(){
-        return `
-        <div class="h-full w-full flex flex-col justify-center text-center">
-            <h2>
-                No Content
-            </h2>
-        </div>
-        `
-    }
-
-    
+    }    
 }

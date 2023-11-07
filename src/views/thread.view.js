@@ -22,7 +22,7 @@ export class ThreadView
 
     displayMessages(messages){
         if (messages == undefined){
-            this.threadList.innerHTML = this.threadTemplate.getNoContentScreen();
+            this.threadList.innerHTML = this.sharedTemplate.getNoContentScreen();
             return;
         }
 
