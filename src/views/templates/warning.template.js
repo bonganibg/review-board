@@ -24,14 +24,11 @@ export class WarningTemplate
 
     getWarningMessage(warning){
         return `
-            <div class="p-4 flex flex-col justify-between gap-4 bg-white border-b-[1px] border-[#9ea7af] warningContainer" data-warningId="${warning.id}">
-                <h2 class="text-md font-semibold" id="reviewerName">
-                    ${warning.reviewer}
-                </h2>
+            <div class="p-4 flex flex-col justify-between gap-4 bg-white border-b-[1px] border-[#9ea7af] warningContainer" data-warningId="${warning.id}">                
                 <div class="flex justify-between">
-                    <p class="text-sm text-[#6C757D]" id="message">
-                        ${warning.message}
-                    </p>
+                    <h2 class="text-md font-semibold" id="reviewerName">
+                        ${warning.reviewer}
+                    </h2>
                     <button id="btnDelete">
                         <svg width="18" height="18" viewBox="0 0 84 86" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="57" height="4" fill="#AE5858"/>
@@ -49,7 +46,10 @@ export class WarningTemplate
                             <rect x="50" y="38" width="21" height="2" transform="rotate(90 50 38)" fill="#AE5858"/>
                         </svg>
                     </button>
-                </div>               
+                </div>     
+                <p class="text-sm text-[#6C757D]" id="message">
+                        ${warning.message}
+                    </p>          
                 <div class="flex flex-row gap-2 h-[25px] justify-start">
                     <p class="font-semibold text-[#6C757D]" id="strikeCounter">
                         ${warning.strikes}

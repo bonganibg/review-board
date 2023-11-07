@@ -26,13 +26,10 @@ export class ThreadTemplate
     messageTemplate(reviewer, message, threadId){
         return`
             <div class="p-4 flex flex-col justify-between gap-4 bg-white border-b-[1px] border-[#9ea7af] threadContainer" data-threadId=${threadId}  id="${threadId}">
-                <h2 class="text-md font-semibold" id="reviewerName">
-                    ${reviewer}
-                </h2>
                 <div class="flex justify-between">
-                    <p class="text-sm text-[#6C757D]" id="message">
-                        ${message}
-                    </p>
+                    <h2 class="text-md font-semibold" id="reviewerName">
+                        ${reviewer}
+                    </h2>    
                     <button id="btnDelete">
                         <svg width="18" height="18" viewBox="0 0 84 86" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="57" height="4" fill="#AE5858"/>
@@ -51,6 +48,9 @@ export class ThreadTemplate
                         </svg>
                     </button>
                 </div>  
+                <p class="text-sm text-[#6C757D]" id="message">
+                        ${message}
+                    </p>
                 <div class="flex flex-row gap-2 h-[25px] justify-start">
                     <p class="font-semibold text-[#6C757D]" id="strikeCounter">
                         
