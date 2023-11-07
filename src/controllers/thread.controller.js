@@ -13,10 +13,10 @@ export class ThreadController
     }    
 
     async loadPage(stdNumber, stdName){        
-        // this.threadView.loadPage();
-        // await this.registerStudent(stdNumber, stdName);
-        // this.threadView.displayMessages(await this.#getMessages());
-        // this.setEventListeners();        
+        this.threadView.loadPage();
+        await this.registerStudent(stdNumber, stdName);
+        this.threadView.displayMessages(await this.#getMessages());
+        this.setEventListeners();        
     }
 
     async #getMessages(){

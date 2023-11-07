@@ -42,12 +42,12 @@ export class WarningController {
         })
     }
 
-    async #setIncreaseStrikeListerner() {
+    async #setIncreaseStrikeListerner() {        
         for (let index = 0; index < this.warningView.strikeContainers.length; index++) {
             let container = this.warningView.strikeContainers[index];
-            let warningId = container.getAttribute('data-warningId');
-            let button = container.getElementsByTagName("button")[0];
-            let strikes = container.getElementsByTagName("p")[0];
+            let warningId = container.getAttribute('data-warningId');           
+            let button = container.getElementsByTagName("a")[0];
+            let strikes = container.getElementsByTagName("p")[1];       
 
             // Button on click listener
             button.addEventListener('click', async () => {

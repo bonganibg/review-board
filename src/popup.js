@@ -2,9 +2,9 @@ import { WarningController } from "./controllers/warning.controller.js";
 import { ThreadController } from "./controllers/thread.controller.js";
 
 // Shared Variables 
-var STUDENT_NUMBER = undefined;
-var REVIEWER_NAME = undefined;
-var STUDENT_NAME = undefined;
+var STUDENT_NUMBER = "STU18027103";
+var REVIEWER_NAME = "bonganibg";
+var STUDENT_NAME = "Jimmy";
 
 // UI components
 const contentScreen = document.getElementById("contentScreen");
