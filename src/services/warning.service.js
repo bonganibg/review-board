@@ -128,4 +128,31 @@ export class WarningService
         return false;
     }
 
+    /**
+     * Delete a warning message
+     * @param {string} studentId Students number
+     * @param {string} warningId Id for the warning message
+     * @param {string} criteria The criteria the warning is for
+     * @returns True if the operation was successful
+     */
+    async delete(studentId, warningId, criteria){
+        let data = {
+            criteria: criteria,
+            warningId: warningId
+        }
+
+        let response = await fetch(`${API_URL}${PATH}/${studentId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.status === 200){
+            return true
+        }
+
+        return false;
+    }
 }
