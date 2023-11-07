@@ -2,38 +2,36 @@ import { WarningController } from "./controllers/warning.controller.js";
 import { ThreadController } from "./controllers/thread.controller.js";
 
 // Shared Variables 
-var STUDENT_NUMBER = "STU18027103";
-var REVIEWER_NAME = "bonganig";
-var STUDENT_NAME = "Jack";
+var STUDENT_NUMBER = undefined;
+var REVIEWER_NAME = undefined;
+var STUDENT_NAME = undefined;
 
 // UI components
 const contentScreen = document.getElementById("contentScreen");
-const btnThread = document.getElementById("btnThreads");
-const btnEfficiency = document.getElementById("btnEfficiency");
-const btnStyle = document.getElementById("btnStyle");
-const btnDocumentation = document.getElementById("btnDocumentation");
-
 const navButtons = document.getElementById("nav-bar").getElementsByTagName('button');
 
-// chrome.storage.local.get('student', (result) => {
-//   let details = JSON.parse(result.student);
 
-//   if (details.source == 'content')
-//   {
-//     STUDENT_NUMBER = details.studentNumber;
-//     REVIEWER_NAME = details.reviewer;
-//     STUDENT_NAME = details.studentName
+// Get the student details from chrome storage
+chrome.storage.local.get('student', (result) => {
+  let details = JSON.parse(result.student);
 
-//     btnThread.innerText = `${STUDENT_NAME}`
-//     SetupEventLisetners();
-//   }
-//   else{
-//     alert("Failed to load student details")
-//   }  
-// })
+  if (details.source == 'content')
+  {
+    STUDENT_NUMBER = details.studentNumber;
+    REVIEWER_NAME = details.reviewer;
+    STUDENT_NAME = details.studentName
 
-SetupEventLisetners()
+    navButtons[0].innerText = `${STUDENT_NAME}`
+    SetupEventLisetners();
+  }
+  else{
+    alert("Failed to load student details")
+  }  
+})
 
+/**
+ * Set the event listeners for the main page
+ */
 function SetupEventLisetners()
 {
   loadDefaultPage();
@@ -45,27 +43,14 @@ function SetupEventLisetners()
   });
   
   // Efficiency button
-  navButtons[1].addEventListener('click', () => {
-      let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "efficiency", contentScreen);
-      warningController.loadPage();
-      setActivePage(1);
-  });
+  loadWarningButtonEventListerner(1, "efficiency");
   
   // Style Button
-  navButtons[2].addEventListener('click', () => {
-      let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "style", contentScreen);
-      warningController.loadPage();
-      setActivePage(2);
-  
-  });
+  loadWarningButtonEventListerner(2, "style");
   
   // Documentation Button
-  navButtons[3].addEventListener('click', () => {
-      let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, "documentation", contentScreen);
-      warningController.loadPage();
-      setActivePage(3);
-  });
-}''
+  loadWarningButtonEventListerner(3, "documentation");
+}
 
 function loadDefaultPage(){
   let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
@@ -73,8 +58,26 @@ function loadDefaultPage(){
   setActivePage(0);
 }
 
+/**
+ * Load the event listener for a warning page
+ * @param {number} index Index of the page button
+ * @param {string} pageName name of the warning page
+ */
+function loadWarningButtonEventListerner(index, pageName){
+  navButtons[index].addEventListener('click', () => {
+      let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, pageName, contentScreen);
+      warningController.loadPage();
+      setActivePage(index);
+    });
+}
+
+/**
+ * Change the color for the buttons to show the current page
+ * @param {number} currentPage Current page being showns button ID
+ */
 function setActivePage(currentPage){
   for (let index = 0; index < navButtons.length; index++) {
     navButtons[index].style.background =  currentPage != index ? "#212529" : "#343A40";
   }
 }
+
