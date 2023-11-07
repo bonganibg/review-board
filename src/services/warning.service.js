@@ -114,6 +114,7 @@ export class WarningService
      * @param {String} criteria Criteria being updated
      */
     async incrementStrikes(studentId, warningId, criteria){
+        console.log(studentId, warningId, criteria);
         let response = await fetch(`${API_URL}${PATH}strike/${studentId}/${warningId}?criteria=${criteria}`, {
             method: 'PUT',
             headers: {

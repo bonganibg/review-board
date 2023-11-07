@@ -47,7 +47,9 @@ export class WarningController {
             let container = this.warningView.strikeContainers[index];
             let warningId = container.getAttribute('data-warningId');           
             let button = container.getElementsByTagName("a")[0];
-            let strikes = container.getElementsByTagName("p")[1];       
+            let strikes = container.getElementsByTagName("p")[1];      
+            
+            console.log(container)
 
             // Button on click listener
             button.addEventListener('click', async () => {
