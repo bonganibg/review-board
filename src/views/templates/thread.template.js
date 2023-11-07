@@ -1,9 +1,6 @@
-import { SharedTemplates } from './shared.template'
-
 export class ThreadTemplate
 {
     constructor(){
-        this.sharedTemplate = new SharedTemplates();
     }
 
     mainScreenTemplate(){

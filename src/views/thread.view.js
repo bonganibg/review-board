@@ -1,15 +1,18 @@
-import { ThreadTemplate } from "./templates/thread.template";
+import { ThreadTemplate } from "./templates/thread.template.js";
+import { SharedTemplate } from "./templates/shared.template.js"
 
 export class ThreadView
 {
     constructor(content_screen){
         this.threadTemplate = new ThreadTemplate();
+        this.sharedTemplate = new SharedTemplate();
         this.contentElement = content_screen;
     }
 
     loadPage(){
         this.contentElement.innerHTML = this.threadTemplate.mainScreenTemplate()
         this.#loadMainScreenComponents();        
+        this.threadList.innerHTML = this.sharedTemplate.getLoadingAnimiation();
     }    
 
     #loadMainScreenComponents(){

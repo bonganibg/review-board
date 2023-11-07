@@ -1,4 +1,4 @@
-export class SharedTemplates
+export class SharedTemplate
 {
     constructor(){}
 
