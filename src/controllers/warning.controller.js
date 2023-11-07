@@ -49,6 +49,7 @@ export class WarningController {
             let strikeButton = container.getElementsByTagName("a")[0];
             let strikes = container.getElementsByTagName("p")[1];     
             let deleteButton = container.getElementsByTagName('button')[0]; 
+            let reviewer = container.getElementsByTagName('h2')[0].innerText;
             
             // Button on click listener
             strikeButton.addEventListener('click', async () => {
@@ -60,17 +61,22 @@ export class WarningController {
             });
 
             // Delete button 
-            deleteButton.addEventListener('click', async () => {
-                let wasDeleted = await this.warningService.delete(this.student_number, warningId, this.criteria);
-
-                if (wasDeleted){
-                    this.warningView.displayWarnings(await this.#getWarnings());
-                    this.#setIncreaseStrikeListerner();
-                }
-                else{
-                    alert('Error trying to delete message')
-                }
-            });
+            if (reviewer === this.reviewer_name){
+                deleteButton.addEventListener('click', async () => {
+                    let wasDeleted = await this.warningService.delete(this.student_number, warningId, this.criteria);
+    
+                    if (wasDeleted){
+                        this.warningView.displayWarnings(await this.#getWarnings());
+                        this.#setIncreaseStrikeListerner();
+                    }
+                    else{
+                        alert('Error trying to delete message')
+                    }
+                });
+            }
+            else{
+                deleteButton.hidden = true;
+            }
         }
     }
 

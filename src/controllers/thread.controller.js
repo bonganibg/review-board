@@ -64,18 +64,25 @@ export class ThreadController
             let container = this.threadView.threadMessagesContainer[index];
             let threadId = container.getAttribute('data-threadId');
             let deleteButton = container.getElementsByTagName('button')[0]
+            let reviewer = container.getElementsByTagName('h2')[0].innerText;
 
-            deleteButton.addEventListener('click', async () => {
-                let result = await this.threadService.delete(this.student_number, threadId);
-
-                if (result){
-                    this.threadView.displayMessages(await this.#getMessages());
-                    this.#setDeleteMessageEventListener();
-                }
-                else{
-                    alert('Error trying to delete message')
-                }
-            })
+            // Set up the delete button for post creator
+            if (this.reviewer_name === reviewer.trim()){
+                deleteButton.addEventListener('click', async () => {
+                    let result = await this.threadService.delete(this.student_number, threadId);
+    
+                    if (result){
+                        this.threadView.displayMessages(await this.#getMessages());
+                        this.#setDeleteMessageEventListener();
+                    }
+                    else{
+                        alert('Error trying to delete message')
+                    }
+                })
+            }
+            else{
+                deleteButton.hidden = true
+            }
         }
     }
 
