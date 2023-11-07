@@ -40,6 +40,7 @@ function SetupEventLisetners()
   navButtons[0].addEventListener('click', () => {    
     let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
     threadController.loadPage(STUDENT_NUMBER, STUDENT_NAME);
+    setActivePage(0)
   });
   
   // Efficiency button
