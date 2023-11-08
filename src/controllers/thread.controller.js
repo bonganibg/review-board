@@ -1,26 +1,30 @@
 import { ThreadService } from "../services/thread.service.js";
 import { ThreadView } from "../views/thread.view.js";
 import { StudentService } from "../services/student.service.js";
+import { AppDetails } from "../models/models.js";
 
 export class ThreadController
 {
-    constructor(student_number, reviewer_name, contentElement){
-        this.student_number = student_number;
-        this.reviewer_name = reviewer_name;
-        this.threadService = new ThreadService();
-        this.studentService = new StudentService();
-        this.threadView = new ThreadView(contentElement);        
+    /**
+     * Setup the variables required for the controller
+     * @param {AppDetails} appDetails Data required for the controller
+     */
+    constructor(appDetails){
+        this.appDetails = appDetails;
+        this.threadService = new ThreadService(appDetails.apiUrl);
+        this.studentService = new StudentService(appDetails.apiUrl);
+        this.threadView = new ThreadView(appDetails.contentElement);        
     }    
 
-    async loadPage(stdNumber, stdName){        
+    async loadPage(){        
         this.threadView.loadPage();
-        await this.registerStudent(stdNumber, stdName);
+        await this.registerStudent(this.appDetails.studentNumber, this.appDetails.studentName);
         this.threadView.displayMessages(await this.#getMessages());
         this.setEventListeners();        
     }
 
     async #getMessages(){
-        let messages = await this.threadService.getAll(this.student_number);
+        let messages = await this.threadService.getAll(this.appDetails.studentNumber);
         return messages;
     }
 
@@ -47,8 +51,8 @@ export class ThreadController
                 return;
             }            
             
-            let result = await this.threadService.create(this.student_number, 
-                                    this.reviewer_name, message.value);
+            let result = await this.threadService.create(this.appDetails.studentNumber, 
+                                    this.appDetails.reviewerName, message.value);
             
             if (result.isSuccess){
                 message.value = "";
@@ -67,9 +71,9 @@ export class ThreadController
             let reviewer = container.getElementsByTagName('h2')[0].innerText;
 
             // Set up the delete button for post creator
-            if (this.reviewer_name === reviewer.trim()){
+            if (this.appDetails.reviewerName === reviewer.trim()){
                 deleteButton.addEventListener('click', async () => {
-                    let result = await this.threadService.delete(this.student_number, threadId);
+                    let result = await this.threadService.delete(this.appDetails.studentNumber, threadId);
     
                     if (result){
                         this.threadView.displayMessages(await this.#getMessages());

@@ -1,11 +1,12 @@
 import { Student } from "../models/models.js";
 
 const PATH = "student/"
-const API_URL = "http://localhost:8080/"
 
 export class StudentService
 {
-    constructor(){}
+    constructor(apiUrl){
+        this.API_URL = apiUrl;
+    }
 
     /**
      * Create a new student object in the database
@@ -13,7 +14,7 @@ export class StudentService
      * @param {String} name The students name
      */
     async create(studentNumber, name){
-        let path = API_URL + PATH;
+        let path = this.API_URL + PATH;
 
         const studentData = {
             studentNumber: studentNumber,
@@ -33,7 +34,7 @@ export class StudentService
     }
 
     async studentExists(studentNumber){
-        let path = API_URL + PATH + studentNumber;
+        let path = this.API_URL + PATH + studentNumber;
         let response = await fetch(path, {
             method: 'GET',
             headers: {

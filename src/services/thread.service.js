@@ -1,11 +1,12 @@
 import { Thread, Response } from "../models/models.js";
 
-const API_URL = "http://localhost:8080/"
 const PATH = "threads/"
 
 export class ThreadService
 {
-    constructor(){}
+    constructor(apiUrl){
+        this.API_URL = apiUrl;
+    }
 
     /**
      * Create a new message thread for a student
@@ -18,7 +19,7 @@ export class ThreadService
         let thread = new Thread(studentNumber, reviewer, message);
 
         // Run the API query
-        let response = await fetch(API_URL + PATH, {
+        let response = await fetch(this.API_URL + PATH, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,7 +54,7 @@ export class ThreadService
         }
 
         // Perform API request
-        let response = await fetch(API_URL + PATH + studentNumber, {
+        let response = await fetch(this.API_URL + PATH + studentNumber, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -77,7 +78,7 @@ export class ThreadService
      */
     async getAll(studentNumber){
         // Run Request
-        let response = await fetch(API_URL + PATH + studentNumber, {
+        let response = await fetch(this.API_URL + PATH + studentNumber, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -110,7 +111,7 @@ export class ThreadService
      */
     async get(studentNumber, threadId){
         // Perform the request
-        let response = await fetch(API_URL + PATH + studentNumber + "/" + threadId, {
+        let response = await fetch(this.API_URL + PATH + studentNumber + "/" + threadId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -138,7 +139,7 @@ export class ThreadService
      * @returns true if the operation was successful
      */
     async delete(studentId, threadId    ){
-        let response = await fetch(`${API_URL}${PATH}${studentId}?threadId=${threadId}`, {
+        let response = await fetch(`${this.API_URL}${PATH}${studentId}?threadId=${threadId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

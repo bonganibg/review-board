@@ -1,14 +1,18 @@
+import { AppDetails } from "../models/models.js";
 import { WarningService } from "../services/warning.service.js";
 import { WarningView } from "../views/warning.view.js";
 
 
 export class WarningController {
-    constructor(student_number, reviewer_name, criteria, contentElement) {
-        this.student_number = student_number;
-        this.reviewer_name = reviewer_name;
-        this.criteria = criteria;
-        this.warningService = new WarningService();
-        this.warningView = new WarningView(contentElement);
+
+    /**
+     * Set up the variables required for the controller
+     * @param {AppDetails} appDetails data required for the controller
+     */
+    constructor(appDetails) {
+        this.appDetails = appDetails;
+        this.warningService = new WarningService(appDetails.apiUrl);
+        this.warningView = new WarningView(appDetails.contentElement);
     }
 
     async loadPage() {
@@ -31,7 +35,7 @@ export class WarningController {
                 return;
             }
 
-            let result = await this.warningService.add(this.student_number, this.criteria, warning, this.reviewer_name);
+            let result = await this.warningService.add(this.appDetails.studentNumber, this.appDetails.criteria, warning, this.appDetails.reviewerName);
 
             if (result.isSuccess) {
                 this.warningView.warningMessageInput.value = "";
@@ -53,7 +57,7 @@ export class WarningController {
             
             // Button on click listener
             strikeButton.addEventListener('click', async () => {
-                let isUpdated = await this.warningService.incrementStrikes(this.student_number, warningId, this.criteria)
+                let isUpdated = await this.warningService.incrementStrikes(this.appDetails.studentNumber, warningId, this.appDetails.criteria)
 
                 if (isUpdated) {
                     strikes.innerText = parseInt(strikes.innerText) + 1;
@@ -61,9 +65,9 @@ export class WarningController {
             });
 
             // Delete button 
-            if (reviewer === this.reviewer_name){
+            if (reviewer === this.appDetails.reviewerName){
                 deleteButton.addEventListener('click', async () => {
-                    let wasDeleted = await this.warningService.delete(this.student_number, warningId, this.criteria);
+                    let wasDeleted = await this.warningService.delete(this.appDetails.studentNumber, warningId, this.appDetails.criteria);
     
                     if (wasDeleted){
                         this.warningView.displayWarnings(await this.#getWarnings());
@@ -81,7 +85,7 @@ export class WarningController {
     }
 
     async #getWarnings() {
-        let warnings = await this.warningService.get(this.student_number, this.criteria);        
+        let warnings = await this.warningService.get(this.appDetails.studentNumber, this.appDetails.criteria);        
         return warnings;
     }
 

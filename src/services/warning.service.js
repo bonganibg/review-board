@@ -1,11 +1,12 @@
 import { Warning, Response } from "../models/models.js";
 
 const PATH = 'warning/'
-const API_URL = "http://localhost:8080/"
 
 export class WarningService
 {
-    constructor(){}
+    constructor(api_url){
+        this.API_URL = api_url;
+    }
 
     /**
      * Add a warning on an issue a stuend was warned about
@@ -18,7 +19,7 @@ export class WarningService
         let warningData = new Warning(studentId, criteria, issue, reviewer);
 
         // Perform Request
-        let response = await fetch(API_URL + PATH, {
+        let response = await fetch(this.API_URL + PATH, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ export class WarningService
         };
 
         // Perform request
-        let response = await fetch(API_URL + PATH + studentId, {
+        let response = await fetch(this.API_URL + PATH + studentId, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,7 +82,7 @@ export class WarningService
      */
     async get(studentId, criteria){
         // Request
-        let response = await fetch(`${API_URL}${PATH}${studentId}?criteria=${criteria}`, {
+        let response = await fetch(`${this.API_URL}${PATH}${studentId}?criteria=${criteria}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -115,7 +116,7 @@ export class WarningService
      */
     async incrementStrikes(studentId, warningId, criteria){
         console.log(studentId, warningId, criteria);
-        let response = await fetch(`${API_URL}${PATH}strike/${studentId}/${warningId}?criteria=${criteria}`, {
+        let response = await fetch(`${this.API_URL}${PATH}strike/${studentId}/${warningId}?criteria=${criteria}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -142,7 +143,7 @@ export class WarningService
             warningId: warningId
         }
 
-        let response = await fetch(`${API_URL}${PATH}${studentId}`, {
+        let response = await fetch(`${this.API_URL}${PATH}${studentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

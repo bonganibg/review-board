@@ -1,33 +1,38 @@
 import { WarningController } from "./controllers/warning.controller.js";
 import { ThreadController } from "./controllers/thread.controller.js";
+import { AppDetails } from "./models/models.js";
 
 // Shared Variables 
-var STUDENT_NUMBER = undefined;
-var REVIEWER_NAME = undefined;
-var STUDENT_NAME = undefined;
+// var STUDENT_NUMBER = undefined;
+// var REVIEWER_NAME = undefined;
+// var STUDENT_NAME = undefined;
 
 // UI components
 const contentScreen = document.getElementById("contentScreen");
 const navButtons = document.getElementById("nav-bar").getElementsByTagName('button');
 
+const appDetails = new AppDetails("STU18027103", "Jimmy", "bonganig",  contentScreen, "http://localhost:8080/");
+
+
+SetupEventLisetners();
 
 // Get the student details from chrome storage
-chrome.storage.local.get('student', (result) => {
-  let details = JSON.parse(result.student);
+// chrome.storage.local.get('student', (result) => {
+//   let details = JSON.parse(result.student);
 
-  if (details.source == 'content')
-  {
-    STUDENT_NUMBER = details.studentNumber;
-    REVIEWER_NAME = details.reviewer;
-    STUDENT_NAME = details.studentName
+//   if (details.source == 'content')
+//   {    
+//     appDetails.studentNumber = details.studentNumber;
+//     appDetails.reviewer = details.reviewer;
+//     appDetails.studentName = details.studentName;
 
-    navButtons[0].innerText = `${STUDENT_NAME}`
-    SetupEventLisetners();
-  }
-  else{
-    alert("Failed to load student details")
-  }  
-})
+//     navButtons[0].innerText = `${appDetails.studentName}`
+//     SetupEventLisetners();
+//   }
+//   else{
+//     alert("Failed to load student details")
+//   }  
+// })
 
 /**
  * Set the event listeners for the main page
@@ -38,8 +43,8 @@ function SetupEventLisetners()
 
   // Thread Button
   navButtons[0].addEventListener('click', () => {    
-    let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-    threadController.loadPage(STUDENT_NUMBER, STUDENT_NAME);
+    let threadController = new ThreadController(appDetails);
+    threadController.loadPage();
     setActivePage(0)
   });
   
@@ -54,8 +59,8 @@ function SetupEventLisetners()
 }
 
 function loadDefaultPage(){
-  let threadController = new ThreadController(STUDENT_NUMBER, REVIEWER_NAME, contentScreen);
-  threadController.loadPage(STUDENT_NUMBER, STUDENT_NAME);
+  let threadController = new ThreadController(appDetails);
+  threadController.loadPage();
   setActivePage(0);
 }
 
@@ -66,7 +71,8 @@ function loadDefaultPage(){
  */
 function loadWarningButtonEventListerner(index, pageName){
   navButtons[index].addEventListener('click', () => {
-      let warningController = new WarningController(STUDENT_NUMBER, REVIEWER_NAME, pageName, contentScreen);
+      appDetails.criteria = pageName;      
+      let warningController = new WarningController(appDetails);
       warningController.loadPage();
       setActivePage(index);
     });

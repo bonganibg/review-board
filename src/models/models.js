@@ -50,17 +50,6 @@ export class Warning
         this.strikes = object.strikes;
         this.id = object.id;
     }
-
-    /*
-        {
-            studentId,
-            criteria,
-            issue/message,
-            reviewer,
-            id,
-            strikes
-        }
-     */
 }
 
 export class Response
@@ -69,5 +58,27 @@ export class Response
     {
         this.message = message;
         this.isSuccess = isSuccess
+    }
+}
+
+export class AppDetails
+{
+    /**
+     * 
+     * @param {string} studentNumber current students student number
+     * @param {string} studentName current students name
+     * @param {string} reviewerName current reviewers name
+     * @param {string} contentElement element where ouput will be displayed
+     * @param {string} apiUrl url to the api
+     * @param {string} criteria criteria being updated (for warnings only)
+     */
+    constructor(studentNumber, studentName,  reviewerName, contentElement, apiUrl, criteria = undefined)
+    {
+        this.studentNumber = studentNumber;
+        this.reviewerName = reviewerName;
+        this.criteria = criteria;
+        this.contentElement = contentElement;       
+        this.apiUrl = apiUrl;
+        this.studentName = studentName;
     }
 }
