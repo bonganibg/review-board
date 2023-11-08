@@ -57,6 +57,7 @@ export class ThreadController
             if (result.isSuccess){
                 message.value = "";
                 this.threadView.displayMessages(await this.#getMessages());
+                this.setEventListeners();
             } else {
                 alert(`${result.message} creating the thread`)
             }
@@ -77,7 +78,7 @@ export class ThreadController
     
                     if (result){
                         this.threadView.displayMessages(await this.#getMessages());
-                        this.#setDeleteMessageEventListener();
+                        this.setEventListeners();
                     }
                     else{
                         alert('Error trying to delete message')

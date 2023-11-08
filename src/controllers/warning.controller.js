@@ -40,6 +40,7 @@ export class WarningController {
             if (result.isSuccess) {
                 this.warningView.warningMessageInput.value = "";
                 this.warningView.displayWarnings(await this.#getWarnings());
+                this.setEventListeners();
             } else {
                 alert(`${result.message} while trying to create warning`);
             }
@@ -71,7 +72,7 @@ export class WarningController {
     
                     if (wasDeleted){
                         this.warningView.displayWarnings(await this.#getWarnings());
-                        this.#setIncreaseStrikeListerner();
+                        this.setEventListeners();
                     }
                     else{
                         alert('Error trying to delete message')
