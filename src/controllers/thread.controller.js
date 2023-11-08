@@ -16,6 +16,9 @@ export class ThreadController
         this.threadView = new ThreadView(appDetails.contentElement);        
     }    
 
+    /**
+     * Set up the components and event listeners for the page
+     */
     async loadPage(){        
         this.threadView.loadPage();
         await this.registerStudent(this.appDetails.studentNumber, this.appDetails.studentName);
@@ -23,16 +26,11 @@ export class ThreadController
         this.setEventListeners();        
     }
 
-    async #getMessages(){
-        let messages = await this.threadService.getAll(this.appDetails.studentNumber);
-        return messages;
-    }
-
-    async setEventListeners(){
-        await this.#setSendMessageEventListener();
-        await this.#setDeleteMessageEventListener();
-    }
-
+    /**
+     * Check if a student exists in the database and create a new one if not
+     * @param {string} studentNumber student number for current student
+     * @param {string} studentName name of the current student
+     */
     async registerStudent(studentNumber, studentName)
     {
         const studentExists = await this.studentService.studentExists(studentNumber);
@@ -40,8 +38,27 @@ export class ThreadController
             await this.studentService.create(studentNumber, studentName)
         }
     }
-    
 
+    /**
+     * Get all messages for a student
+     * @returns List of Thread objects
+     */
+    async #getMessages(){
+        let messages = await this.threadService.getAll(this.appDetails.studentNumber);
+        return messages;
+    }
+
+    /**
+     * Set pu all of the event listener functions
+     */
+    async setEventListeners(){
+        await this.#setSendMessageEventListener();
+        await this.#setDeleteMessageEventListener();
+    }    
+    
+    /**
+     * Set the event listener for sending a message     
+     */
     async #setSendMessageEventListener(){
         this.threadView.messageButton.addEventListener('click', async () => {
             let message = document.getElementById("txtThreadMessage");
@@ -64,6 +81,11 @@ export class ThreadController
         })
     }
 
+    /**
+     * Set the event listener for deleting a message
+     * Only the post creator can delete a message. Other reviewers cannot. 
+     * The delete button is hidden for other reviewers. 
+     */
     async #setDeleteMessageEventListener(){
         for (let index = 0; index < this.threadView.threadMessagesContainer.length; index++){
             let container = this.threadView.threadMessagesContainer[index];
