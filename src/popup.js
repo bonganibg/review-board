@@ -19,8 +19,8 @@ chrome.storage.local.get('student', (result) => {
   if (details.source == 'content')
   {    
     appDetails.studentNumber = details.studentNumber;
-    appDetails.reviewer = details.reviewer;
-    appDetails.studentName = details.studentName;
+    appDetails.reviewerName = details.reviewer;
+    appDetails.studentName = details.studentName;    
 
     NAV_BUTTONS[0].innerText = `${appDetails.studentName}`
     SetupEventLisetners();
